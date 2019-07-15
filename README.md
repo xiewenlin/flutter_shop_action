@@ -102,9 +102,9 @@ void _getCategory() async {
 ---
 
 [创享视界](https://creativeview.cn)官网：https://creativeview.cn<br />[语雀](https://www.yuque.com/xiewenlin)：https://www.yuque.com/xiewenlin<br />[新浪微博](https://weibo.com/u/2219755213)(@创享视界)：https://weibo.com/u/2219755213<br />入群加微信号：cool-smiler ，备注：入群<br />
-<img src="https://cdn.nlark.com/yuque/0/2019/jpeg/195205/1562038090236-1f64f21f-2424-462f-b0ad-047f10f5d860.jpeg" width = 288 height = 288 />
-<img src="https://cdn.nlark.com/yuque/0/2019/jpeg/195205/1562038096815-dca038b8-50f8-4b02-8520-c56087053439.jpeg" width = 288 height = 288 />
-<img src="https://cdn.nlark.com/yuque/0/2019/png/195205/1563117159893-cb99408f-2d86-4082-b43f-7f55a6d9826b.png" width = 288 height = 288 />
+<img src="https://cdn.nlark.com/yuque/0/2019/jpeg/195205/1562038090236-1f64f21f-2424-462f-b0ad-047f10f5d860.jpeg" width = 432 height = 432 />
+<img src="https://cdn.nlark.com/yuque/0/2019/jpeg/195205/1562038096815-dca038b8-50f8-4b02-8520-c56087053439.jpeg" width = 432 height = 432 />
+<img src="https://cdn.nlark.com/yuque/0/2019/png/195205/1563117159893-cb99408f-2d86-4082-b43f-7f55a6d9826b.png" width = 868 height = 846 />
 ## Getting Started
 
 This project is a starting point for a Flutter application.
