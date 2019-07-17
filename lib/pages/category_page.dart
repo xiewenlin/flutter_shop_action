@@ -5,6 +5,7 @@ import '../service/graphQldata.dart';
 import 'dart:convert';
 import '../provide/child_category.dart';
 import 'package:provide/provide.dart';
+import '../provide/category_goods_list.dart';
 
 class CategoryPage extends StatelessWidget {
   List categoryGoodsList = [];
@@ -47,6 +48,7 @@ class _LeftCategoryState extends State<LeftCategory> {
     // TODO: implement initState
     super.initState();
     _getCategory();
+    _getGoodsList(null);//设置默认数据
   }
 
   @override
@@ -75,7 +77,25 @@ class _LeftCategoryState extends State<LeftCategory> {
         list = jsonObj['category']['categoryList']['data'];
       });
       Provide.value<ChildCategory>(context)
-          .getChildCategory(list[0]['bxMallSubDto']);
+          .getChildCategory(list[0]['bxMallSubDto'],list[0]['mallCategoryId']);
+      //listModel.data.forEach((item)=>print(item.mallCategoryName));
+    });
+  }
+//根据左侧分类Id获取商品列表
+  void _getGoodsList(String categoryId) async {
+    var data={
+      'category':categoryId==null?'4':categoryId,
+      'categorySubId':'',
+      'page':1
+    };
+    await queryCategory().then((val) {
+      var data = val;
+      String jsonStr = data['post']['content'];
+      var jsonObj = json.decode(jsonStr.toString());
+     /* setState(() {
+        List goodsList = jsonObj['category']['categoryGoodsList']['data'];
+      });*/
+      Provide.value<CategoryGoodsListProvide>(context).getGoodsList(jsonObj['category']['categoryGoodsList']['data']);
       //listModel.data.forEach((item)=>print(item.mallCategoryName));
     });
   }
@@ -89,7 +109,9 @@ class _LeftCategoryState extends State<LeftCategory> {
             listIndex = index;
           });
           var childList = list[index]['bxMallSubDto'];
-          Provide.value<ChildCategory>(context).getChildCategory(childList);
+          var categoryId=list[index]['mallCategoryId'];
+          Provide.value<ChildCategory>(context).getChildCategory(childList,categoryId);
+          _getGoodsList(categoryId);
         },
         child: Container(
           height: 50,
@@ -105,7 +127,7 @@ class _LeftCategoryState extends State<LeftCategory> {
         ));
   }
 }
-
+//小类右侧导航
 class RightCategoryNavState extends StatefulWidget {
   @override
   _RightCategoryNavStateState createState() => _RightCategoryNavStateState();
@@ -129,25 +151,57 @@ class _RightCategoryNavStateState extends State<RightCategoryNavState> {
               scrollDirection: Axis.horizontal,
               itemCount: childCategory.childCategoryList.length,
               itemBuilder: (context, index) {
-                return _rightInkWell(childCategory.childCategoryList[index]);
+                return _rightInkWell(index,childCategory.childCategoryList[index]);
               }),
         );
       },
     );
   }
 
-  Widget _rightInkWell(var item) {
+  Widget _rightInkWell(int index,var item) {
+    bool isClick=false;
+    isClick=(index==Provide.value<ChildCategory>(context).childIndex)?true:false;
     //需要点击，用InkWell
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provide.value<ChildCategory>(context).changeChildIndex(index,item['mallSubId']);
+        _getGoodsList(item['mallSubId']);
+      },
       child: Container(
         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
         child: Text(
           item['mallSubName'],
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(
+            fontSize: 16,
+            color: isClick?Colors.redAccent:Colors.black,
+          ),
         ),
       ),
     );
+  }
+  //根据右侧上方的二级分类Id获取商品列表
+  void _getGoodsList(String categorySubId) async {
+    var data={
+      'category':Provide.value<ChildCategory>(context).categoryId,
+      'categorySubId':categorySubId,
+      'page':1
+    };
+    await queryCategory().then((val) {
+      var data = val;
+      String jsonStr = data['post']['content'];
+      var jsonObj = json.decode(jsonStr.toString());
+      List categoryGoodsList=jsonObj['category']['categoryGoodsList']['data'];
+      if(categoryGoodsList==null){
+        Provide.value<CategoryGoodsListProvide>(context).getGoodsList([]);
+      }else{
+        Provide.value<CategoryGoodsListProvide>(context).getGoodsList(categoryGoodsList);
+      }
+      /* setState(() {
+        List goodsList = jsonObj['category']['categoryGoodsList']['data'];
+      });*/
+      //Provide.value<CategoryGoodsListProvide>(context).getGoodsList(jsonObj['category']['categoryGoodsList']['data']);
+      //listModel.data.forEach((item)=>print(item.mallCategoryName));
+    });
   }
 }
 
@@ -158,50 +212,50 @@ class CategoryGoodsList extends StatefulWidget {
 }
 
 class _CategoryGoodsListState extends State<CategoryGoodsList> {
-  List categoryGoodsList = [];
+  //List categoryGoodsList = [];
 
   @override
   void initState() {
     // TODO: implement initState
-    _getGoodsList();
+    //_getGoodsList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      height: 400,
-      child: ListView.builder(
-          itemCount: categoryGoodsList.length,
-          itemBuilder: (context,index){
-            return _listItemWidget(index);
-          }
-      ),
+    return Provide<CategoryGoodsListProvide>(
+      builder: (context,child,data){
+        if(data.goodsList.length>0){
+          return Expanded(
+              child: Container(
+                width: 250,
+                //height: 400,
+                child: ListView.builder(
+                    itemCount: data.goodsList.length,
+                    itemBuilder: (context,index){
+                      return _listItemWidget(data.goodsList,index);
+                    }
+                ),
+              )
+          );
+        }else{
+          return Text('暂时没有数据');
+        }
+      }
+
     );
+
+
   }
 
-  void _getGoodsList() async {
-    await queryCategory().then((val) {
-      var data = val;
-      String jsonStr = data['post']['content'];
-      var jsonObj = json.decode(jsonStr.toString());
-      setState(() {
-        categoryGoodsList = jsonObj['category']['categoryGoodsList']['data'];
-      });
-      //Provide.value<ChildCategory>(context).getChildCategory(list[0]['bxMallSubDto']);
-      //listModel.data.forEach((item)=>print(item.mallCategoryName));
-    });
-  }
-
-  Widget _goodsImage(index) {
+  Widget _goodsImage(List categoryGoodsList ,index) {
     return Container(
       width: 100,
       child: Image.network(categoryGoodsList[index]['image']),
     );
   }
 
-  Widget _goodsName(index) {
+  Widget _goodsName(List categoryGoodsList ,index) {
     return Container(
       width: 100,
       child:  Text(
@@ -213,7 +267,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
     );
   }
 
-  Widget _goodsPrice(index) {
+  Widget _goodsPrice(List categoryGoodsList ,index) {
     return Container(
       margin: EdgeInsets.only(top: 5),
       width: 150,
@@ -235,7 +289,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
     );
   }
 
-  Widget _listItemWidget(int index) {
+  Widget _listItemWidget(List categoryGoodsList ,int index) {
     return InkWell(
       onTap: () {},
       child: Container(
@@ -246,11 +300,11 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                 Border(bottom: BorderSide(width: 1.0, color: Colors.black12))),
         child: Row(
           children: <Widget>[
-            _goodsImage(index),
+            _goodsImage(categoryGoodsList ,index),
             Column(
               children: <Widget>[
-                _goodsName(index),
-                _goodsPrice(index),
+                _goodsName(categoryGoodsList ,index),
+                _goodsPrice(categoryGoodsList ,index),
               ],
             ),
           ],
