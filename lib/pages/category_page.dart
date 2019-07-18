@@ -6,6 +6,8 @@ import 'dart:convert';
 import '../provide/child_category.dart';
 import 'package:provide/provide.dart';
 import '../provide/category_goods_list.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CategoryPage extends StatelessWidget {
   List categoryGoodsList = [];
@@ -213,7 +215,8 @@ class CategoryGoodsList extends StatefulWidget {
 
 class _CategoryGoodsListState extends State<CategoryGoodsList> {
   //List categoryGoodsList = [];
-
+  GlobalKey<RefreshFooterState> _footerkey=new GlobalKey<RefreshFooterState>();
+  var scrollController=new ScrollController();
   @override
   void initState() {
     // TODO: implement initState
@@ -225,17 +228,45 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context,child,data){
+        try{
+          if(Provide.value<ChildCategory>(context).page==1){
+            //列表位置放到最上边
+            scrollController.jumpTo(0.0);
+          }
+        }catch(e){
+          print('进入页面第一次初始化:${e}');
+        }
         if(data.goodsList.length>0){
           return Expanded(
               child: Container(
                 width: 250,
                 //height: 400,
-                child: ListView.builder(
-                    itemCount: data.goodsList.length,
-                    itemBuilder: (context,index){
-                      return _listItemWidget(data.goodsList,index);
-                    }
-                ),
+                child:EasyRefresh(
+                  refreshFooter: ClassicsFooter(
+                    key: _footerkey,
+                    bgColor: Colors.white,
+                    textColor: Colors.redAccent,
+                    moreInfoColor: Colors.redAccent,
+                    showMore: true,
+                    noMoreText: Provide.value<ChildCategory>(context).noMoreText,
+                    moreInfo: '',
+                    loadReadyText: '上拉加载',
+                    loadingText: '加载中...',
+                  ),
+                  child:ListView.builder(
+                      controller: scrollController,
+                      itemCount: data.goodsList.length,
+                      itemBuilder: (context,index){
+                        return _listItemWidget(data.goodsList,index);
+                      }
+                  ) ,
+                  loadMore: () async{
+                    _getMoreGoodsList();
+                  },
+                )
+
+
+
               )
           );
         }else{
@@ -287,6 +318,41 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
         ],
       ),
     );
+  }
+
+  //根据右侧上方的二级分类Id获取商品列表
+  void _getMoreGoodsList() async {
+    Provide.value<ChildCategory>(context).addPage();
+    var data={
+      'category':Provide.value<ChildCategory>(context).categoryId,
+      'categorySubId':Provide.value<ChildCategory>(context).subId,
+      'page':Provide.value<ChildCategory>(context).page,
+    };
+    await queryCategory().then((val) {
+      var data = val;
+      String jsonStr = data['post']['content'];
+      var jsonObj = json.decode(jsonStr.toString());
+      List categoryGoodsList=jsonObj['category']['categoryGoodsList']['data'];
+      if(categoryGoodsList==null){
+        Fluttertoast.showToast(
+            msg: '已经到底了',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,//提示位置
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
+          fontSize: 16
+
+        );
+        Provide.value<ChildCategory>(context).changeNoMore('没有更多了');
+      }else{
+        Provide.value<CategoryGoodsListProvide>(context).getMoreGoodsList(categoryGoodsList);
+      }
+      /* setState(() {
+        List goodsList = jsonObj['category']['categoryGoodsList']['data'];
+      });*/
+      //Provide.value<CategoryGoodsListProvide>(context).getGoodsList(jsonObj['category']['categoryGoodsList']['data']);
+      //listModel.data.forEach((item)=>print(item.mallCategoryName));
+    });
   }
 
   Widget _listItemWidget(List categoryGoodsList ,int index) {

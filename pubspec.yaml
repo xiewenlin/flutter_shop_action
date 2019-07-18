@@ -32,6 +32,8 @@ dependencies:
   graphql: ^1.0.1 #GraphQL客户端插件
   args: ^1.5.2 #该库支持GNU和POSIX样式选项，它适用于服务器端和客户端应用程序
   provide: ^1.0.2 #谷歌官方状态管理插件
+  fluttertoast: ^3.1.0 #消息提示插件
+  fluro: "^1.5.0" #企业级路由插件
 dev_dependencies:
   flutter_test:
     sdk: flutter
