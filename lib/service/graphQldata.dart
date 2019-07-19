@@ -14,7 +14,7 @@ ArgResults argResults;
 // client - create a graphql client
 GraphQLClient client() {
   final HttpLink _httpLink = HttpLink(
-    uri: servicePath['categoryPageContentGraphUrl'],
+    uri: servicePath['getPageContentGraphUrl'],
   );
 
   final AuthLink _authLink = AuthLink(

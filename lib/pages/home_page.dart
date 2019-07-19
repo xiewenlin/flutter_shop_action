@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import '../service/service_method.dart';
 import '../widget/topNavigator.dart';
-import '../widget/advertising_banner.dart';
 import '../widget/pic_swiper.dart';
 import '../widget/dial_phone.dart';
 import '../widget/product_recommend.dart';
 import '../widget/floor_layout.dart';
-import '../widget/hot_goods.dart';
 import 'dart:convert';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../routers/application.dart';
+import '../service/graphQldata.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -38,24 +36,26 @@ class _HomePageState extends State<HomePage>
         title: Text('京东微商城'),
       ),
       body: FutureBuilder(
-        future: getHomePageContent(),
+        future: queryCategory(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             //var data = json.decode(snapshot.data.toString());
             var data = snapshot.data;
+            String jsonStr = data['post']['content'];
+            var jsonObj = json.decode(jsonStr.toString());
             //图片轮播
-            List<Map> swiper = (data['slides'] as List).cast();
+            List<Map> swiper = (jsonObj['index']['slides'] as List).cast();
             //网格布局
-            List<Map> navigatorList = (data['category'] as List).cast();
+            List<Map> navigatorList = (jsonObj['index']['category'] as List).cast();
             //广告横幅
-            String adPicture = data['adBannerUrl'].toString();
+            String adPicture = jsonObj['index']['adBannerUrl'].toString();
             //拨打店长电话
-            String leaderImage = data['shopInfo']['leaderImage'].toString();
-            String leaderPhone = data['shopInfo']['leaderPhone'].toString();
-            List<Map> recommendList = (data['recommendList'] as List).cast();
-            String floorTitle = data['floor']['picture_address'].toString();
+            String leaderImage = jsonObj['index']['shopInfo']['leaderImage'].toString();
+            String leaderPhone = jsonObj['index']['shopInfo']['leaderPhone'].toString();
+            List<Map> recommendList = (jsonObj['index']['recommendList'] as List).cast();
+            String floorTitle = jsonObj['index']['floor']['picture_address'].toString();
             List<Map> floorGoodsList =
-                (data['floor']['floorGoodsList'] as List).cast();
+                (jsonObj['index']['floor']['floorGoodsList'] as List).cast();
             return EasyRefresh(
               refreshFooter: ClassicsFooter(
                 key: _footerkey,
@@ -82,10 +82,12 @@ class _HomePageState extends State<HomePage>
               ),
               loadMore: () async {
                 var formPage = {'page': page};
-               await getHomePageContent().then((val) {
+               await queryCategory().then((val) {
                   //var data=json.decode(val.toString());
                   var data = val;
-                  List<Map> newGoodsList = (data['hotGoodsList'] as List).cast();
+                  String jsonStr = data['post']['content'];
+                  var jsonObj = json.decode(jsonStr.toString());
+                  List<Map> newGoodsList = (jsonObj['index']['hotGoodsList'] as List).cast();
                   setState(() {
                     hotGoodsList.addAll(newGoodsList);
                     page++;

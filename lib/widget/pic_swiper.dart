@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-
+import '../routers/application.dart';
 //首页轮播组件
 class SwiperDiy extends StatelessWidget {
   final List swiperDataList;
@@ -13,10 +13,17 @@ class SwiperDiy extends StatelessWidget {
       height: 150,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return Image.network(
-            "${swiperDataList[index]['image']}",
-            fit: BoxFit.fill,
+          return InkWell(
+            onTap: (){
+              Application.router.navigateTo(context, "/detail?id=${swiperDataList[index]['goodsId']}");
+            },
+            child: Image.network(
+              "${swiperDataList[index]['image']}",
+              fit: BoxFit.fill,
+            ),
           );
+
+
         },
         itemCount: 3,
         pagination: SwiperPagination(),

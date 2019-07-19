@@ -4,7 +4,7 @@ import 'dart:io';
 import '../config/service_url.dart';
 
 //获取首页主题内容
-Future getHomePageContent() async{
+/*Future getHomePageContent() async{
  try{
    print('开始获取首页数据....');
    Response response;
@@ -20,7 +20,7 @@ Future getHomePageContent() async{
  }catch(e){
    print('发生异常....');
  }
-}
+}*/
 
 //获取首页主题内容
 Future getCategoryPageContent() async{
