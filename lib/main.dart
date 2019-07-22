@@ -9,6 +9,7 @@ import 'routers/routers.dart';
 import 'routers/application.dart';
 import 'provide/details_info.dart';
 import 'provide/cart.dart';
+import 'provide/currentIndex.dart';
 
   void main(){
     var counter=Counter();
@@ -16,6 +17,7 @@ import 'provide/cart.dart';
     var categoryGoodsListProvide=CategoryGoodsListProvide();
     var detailsInfoProvide=DetailsInfoProvide();
     var cartProvide=CartProvide();
+    var currentIndexProvide=CurrentIndexProvide();
     var providers=Providers();
 
     providers..provide(Provider<Counter>.value(counter));
@@ -23,6 +25,7 @@ import 'provide/cart.dart';
     providers..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide));
     providers..provide(Provider<DetailsInfoProvide>.value(detailsInfoProvide));
     providers..provide(Provider<CartProvide>.value(cartProvide));
+    providers..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide));
     runApp(ProviderNode(child: MyApp(), providers: providers));
   }
 

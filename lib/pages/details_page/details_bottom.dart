@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 import '../../provide/cart.dart';
 import '../../provide/details_info.dart';
+import '../../provide/currentIndex.dart';
 
 class DetailsBottom extends StatelessWidget {
   @override
@@ -18,17 +19,49 @@ class DetailsBottom extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: <Widget>[
-          InkWell(
-            onTap: (){},
-            child: Container(
-              width: 50,
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.shopping_cart,
-                size: 35,
-                color: Colors.redAccent,
+          Stack(
+            children: <Widget>[
+              InkWell(
+                onTap: (){
+                  Provide.value<CurrentIndexProvide>(context).changeIndex(2);
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  width: 50,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.shopping_cart,
+                    size: 40,
+                    color: Colors.redAccent,
+                  ),
+                ),
               ),
-            ),
+              Provide<CartProvide>(
+                builder: (context,child,val){
+                int goodsCount=Provide.value<CartProvide>(context).allGoodsCount;
+                return Positioned(
+                  top: 0,
+                  right: 10,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent,
+                      border: Border.all(width: 2,color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: Text(
+                      '${goodsCount}',
+                      style: TextStyle(
+                        color:Colors.white,
+                        fontSize: 10
+                      ),
+
+                    ),
+                  ),
+                );
+                },
+              ),
+            ],
           ),
           InkWell(
             onTap: () async{

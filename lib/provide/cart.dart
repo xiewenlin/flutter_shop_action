@@ -17,10 +17,16 @@ class CartProvide with ChangeNotifier {
     List<Map> tempList = (temp as List).cast();
     bool isHave = false;
     int ival = 0;
+    allPrice=0;//总价格初始化
+    allGoodsCount=0;//商品总数量初始化
     tempList.forEach((item) {
       if (item['goodsId'] == goodsId) {
         tempList[ival]['count'] = item['count'] + 1;
         isHave = true;
+      }
+      if(item['isCheck']){
+        allPrice+=(tempList[ival]['price']*tempList[ival]['count']);
+        allGoodsCount+=tempList[ival]['count'];
       }
       ival++;
     });
@@ -34,11 +40,14 @@ class CartProvide with ChangeNotifier {
         'isCheck':true
       };
       tempList.add(addNewGoods);
+      allPrice+=(count*price);
+      allGoodsCount+=count;
     }
     cartString = json.encode(tempList).toString();
     //打印字符串
     //print(cartString);
     print(tempList);
+    print('购物车里的商品数量'+allGoodsCount.toString());
     preferences.setString('cartInfo', cartString);
     notifyListeners();
   }
