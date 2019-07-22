@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../service/graphQldata.dart';
 import 'dart:convert';
-import 'package:provide/provide.dart';
 
 class DetailsInfoProvide with ChangeNotifier {
   var goodsInfo = null;
