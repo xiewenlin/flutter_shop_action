@@ -137,6 +137,40 @@ void _getCategory() async {
   "profile": {
     "name": "创客俱乐部"
   },
+  "goodsDetails":{
+	"code": "0",
+	"message": "success",
+	"data": {
+		"goodInfo": {
+			"image5": "",
+			"amount": 10000,
+			"image3": "",
+			"image4": "",
+			"goodsId": "ed675dda49e0445fa769f3d8020ab5e9",
+			"isOnline": "yes",
+			"image1": "http://images.baixingliangfan.cn/shopGoodsImg/20190116/20190116162618_2924.jpg",
+			"image2": "",
+			"goodsSerialNumber": "6928804011173",
+			"oriPrice": 3.00,
+			"presentPrice": 2.70,
+			"comPic": "http://images.baixingliangfan.cn/compressedPic/20190116162618_2924.jpg",
+			"state": 1,
+			"shopId": "402880e860166f3c0160167897d60002",
+			"goodsName": "可口可乐500ml/瓶",
+			"goodsDetail": "<img src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20171224/20171224081109_5060.jpg\"   alt=\"\" /><img src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20171224/20171224081109_1063.jpg\"   alt=\"\" /><img src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20171224/20171224081110_8029.jpg\"  alt=\"\" /><img src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20171224/20171224081110_1074.jpg\"  alt=\"\" /><img src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20171224/20171224081110_8439.jpg\"  alt=\"\" /><img src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20171224/20171224081110_6800.jpg\"  alt=\"\" />"
+		},
+		"goodComments": [{
+			"SCORE": 5,
+			"comments": "果断卸载，2.5个小时才送到",
+			"userName": "157******27",
+			"discussTime": 1539491266336
+		}],
+		"advertesPicture": {
+			"PICTURE_ADDRESS": "http://images.baixingliangfan.cn/advertesPicture/20190113/20190113134955_5825.jpg",
+			"TO_PLACE": "1"
+		}
+	}
+},
   "category":{
     "categoryGoodsList":{
       "code": "0",
@@ -1050,12 +1084,12 @@ void _getCategory() async {
         {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t1/24719/4/15377/376386/5caff612Ed2715284/e97073b9fee27e1d.jpg.dpg","mallPrice":"2888","price":"1999"}
       ]
     },"hotGoodsList":[
-      {"image":"https://m.360buyimg.com/n1/s150x150_jfs/t29566/227/1464891645/10350/a5b133e2/5ce20cdcNd9cdd972.jpg!q70.jpg.dpg","name":"5号商品","mallPrice":"138.9","price":"300"},
-      {"image":"https://m.360buyimg.com/mobilecms/s150x150_jfs/t1/76945/35/760/26244/5cef9705E501242ee/c56b89c0946438ef.jpg!q70.jpg.dpg","name":"6号商品","mallPrice":"138.9","price":"300"},
-      {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t22198/129/362653453/91416/1b2f6c94/5b0b83dfNba71b3c5.jpg.dpg","name":"1号商品","mallPrice":"389","price":"529"},
-      {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t1/59772/32/3583/191176/5d1c263eE4639f3d3/edc502a27f94c298.jpg.dpg","name":"2号商品","mallPrice":"35","price":"42"},
-      {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t1/82070/23/3491/193013/5d1d6491Ec3a05d48/6d8f83f9f5653f7e.jpg.dpg","name":"3号商品","mallPrice":"138.9","price":"300"},
-      {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t1/51738/16/4023/108663/5d1aef04E1a7ba4c2/6783a589b81170dc.png","name":"4号商品","mallPrice":"2888","price":"1999"}
+      {"image":"https://m.360buyimg.com/n1/s150x150_jfs/t29566/227/1464891645/10350/a5b133e2/5ce20cdcNd9cdd972.jpg!q70.jpg.dpg","name":"5号商品","mallPrice":"138.9","price":"300","goodsId":"ed675dda49e0445fa769f3d8020ab5e9"},
+      {"image":"https://m.360buyimg.com/mobilecms/s150x150_jfs/t1/76945/35/760/26244/5cef9705E501242ee/c56b89c0946438ef.jpg!q70.jpg.dpg","name":"6号商品","mallPrice":"138.9","price":"300","goodsId":"ed675dda49e0445fa769f3d8020ab5e9"},
+      {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t22198/129/362653453/91416/1b2f6c94/5b0b83dfNba71b3c5.jpg.dpg","name":"1号商品","mallPrice":"389","price":"529","goodsId":"ed675dda49e0445fa769f3d8020ab5e9"},
+      {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t1/59772/32/3583/191176/5d1c263eE4639f3d3/edc502a27f94c298.jpg.dpg","name":"2号商品","mallPrice":"35","price":"42","goodsId":"ed675dda49e0445fa769f3d8020ab5e9"},
+      {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t1/82070/23/3491/193013/5d1d6491Ec3a05d48/6d8f83f9f5653f7e.jpg.dpg","name":"3号商品","mallPrice":"138.9","price":"300","goodsId":"ed675dda49e0445fa769f3d8020ab5e9"},
+      {"image":"https://img14.360buyimg.com/n1/s150x150_jfs/t1/51738/16/4023/108663/5d1aef04E1a7ba4c2/6783a589b81170dc.png","name":"4号商品","mallPrice":"2888","price":"1999","goodsId":"ed675dda49e0445fa769f3d8020ab5e9"}
     ]
   }
 }

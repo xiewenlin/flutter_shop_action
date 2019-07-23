@@ -4,6 +4,7 @@ import 'home_page.dart';
 import 'category_page.dart';
 import 'cart_page.dart';
 import 'member_page.dart';
+import 'lab_page.dart';
 import 'package:provide/provide.dart';
 import '../provide/currentIndex.dart';
 
@@ -16,13 +17,16 @@ class IndexPage extends StatelessWidget {
     BottomNavigationBarItem(
         icon: Icon(CupertinoIcons.shopping_cart), title: Text('购物车')),
     BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.profile_circled), title: Text('会员中心')),
+        icon: Icon(CupertinoIcons.profile_circled), title: Text('我')),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.settings), title: Text('实验')),
   ];
   final List<Widget> tabBodies = [
     HomePage(),
     CategoryPage(),
     CartPage(),
     MemberPage(),
+    LabPage(),
   ];
 
   @override

@@ -33,9 +33,10 @@ dependencies:
   args: ^1.5.2 #该库支持GNU和POSIX样式选项，它适用于服务器端和客户端应用程序
   provide: ^1.0.2 #谷歌官方状态管理插件
   fluttertoast: ^3.1.0 #消息提示插件
-  fluro: "^1.5.0" #企业级路由插件
+  fluro: ^1.5.0 #企业级路由插件
   flutter_html: ^0.10.4 #用于将静态html标记呈现为Flutter的插件
   shared_preferences: ^0.5.3+4 #谷歌官方提供的轻量级数据持久化插件，常用于购物车
+  jpush_flutter: 0.0.12 #极光推送插件
 dev_dependencies:
   flutter_test:
     sdk: flutter
